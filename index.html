@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certtus ERP — Apresentação</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-slide: #f8f9fc;
+    --text: #1a1a2e;
+    --text-secondary: #555770;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --accent-dark: #1d4ed8;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --card-shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --nav-bg: rgba(255,255,255,.85);
+    --icon-bg: #eff6ff;
+    --tag-bg: #f1f5f9;
+    --tag-text: #475569;
+    --gradient-start: #2563eb;
+    --gradient-end: #7c3aed;
+    --hero-overlay: rgba(255,255,255,.92);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-slide: #1e293b;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --accent-dark: #93bbfd;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --card-shadow: 0 1px 3px rgba(0,0,0,.3), 0 1px 2px rgba(0,0,0,.2);
+    --nav-bg: rgba(15,23,42,.9);
+    --icon-bg: #1e3a5f;
+    --tag-bg: #334155;
+    --tag-text: #94a3b8;
+    --gradient-start: #3b82f6;
+    --gradient-end: #8b5cf6;
+    --hero-overlay: rgba(15,23,42,.92);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .35s, color .35s;
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    transition: background .35s, border-color .35s;
+  }
+  .nav-brand { font-weight: 700; font-size: 1.15rem; letter-spacing: -.02em; }
+  .nav-brand span { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-controls { display: flex; align-items: center; gap: 1rem; }
+  .slide-counter { font-size: .85rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+
+  /* ─── THEME TOGGLE ─── */
+  .theme-toggle {
+    position: relative; width: 52px; height: 28px; cursor: pointer;
+    background: var(--tag-bg); border-radius: 14px; border: 1px solid var(--card-border);
+    transition: background .3s, border-color .3s;
+  }
+  .theme-toggle::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); transition: transform .3s;
+  }
+  [data-theme="dark"] .theme-toggle::after { transform: translateX(24px); }
+  .theme-toggle-label { font-size: .75rem; color: var(--text-secondary); }
+  .toggle-wrap { display: flex; align-items: center; gap: .5rem; }
+  .toggle-icon { font-size: 1rem; }
+
+  /* ─── SLIDES ─── */
+  .slide {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 80px 2rem 2rem; background: var(--bg-slide);
+    transition: background .35s;
+  }
+  .slide:nth-child(even) { background: var(--bg); }
+  .slide-inner { max-width: 1100px; width: 100%; }
+
+  /* ─── HERO ─── */
+  .hero {
+    text-align: center; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  }
+  .hero .slide-inner { position: relative; z-index: 1; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--hero-overlay);
+    z-index: 0;
+  }
+  .hero-badge {
+    display: inline-block; padding: .35rem 1rem; border-radius: 20px;
+    background: var(--accent-light); color: var(--accent);
+    font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -.03em;
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+  .hero h1 span { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 1.15rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2.5rem; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  }
+  .hero-stat-value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .hero-stat-label { font-size: .8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header { margin-bottom: 2.5rem; }
+  .section-icon {
+    width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    background: var(--icon-bg); font-size: 1.6rem; margin-bottom: 1rem;
+  }
+  .section-tag {
+    font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .5rem;
+  }
+  .section-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: .5rem; }
+  .section-header p { color: var(--text-secondary); max-width: 620px; }
+
+  /* ─── FEATURE CARDS ─── */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;
+  }
+  .feature-card {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+    padding: 1.5rem; transition: transform .2s, box-shadow .2s, background .35s, border-color .35s;
+    box-shadow: var(--card-shadow);
+  }
+  .feature-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,.08); }
+  .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .5rem; }
+  .feature-card p { font-size: .88rem; color: var(--text-secondary); line-height: 1.5; }
+  .feature-icon { font-size: 1.3rem; margin-bottom: .75rem; }
+
+  /* ─── TAG LIST ─── */
+  .tag-list { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+  .tag {
+    display: inline-block; padding: .3rem .75rem; border-radius: 6px;
+    background: var(--tag-bg); color: var(--tag-text); font-size: .78rem; font-weight: 500;
+    transition: background .35s, color .35s;
+  }
+
+  /* ─── CLOSING SLIDE ─── */
+  .closing { text-align: center; }
+  .closing h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 1rem; }
+  .closing h2 span { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .closing p { color: var(--text-secondary); max-width: 540px; margin: 0 auto; font-size: 1.05rem; }
+
+  /* ─── KEYBOARD HINTS ─── */
+  .kbd-hints {
+    position: fixed; bottom: 1.25rem; right: 1.25rem; display: flex; gap: .5rem;
+    font-size: .75rem; color: var(--text-secondary); z-index: 50;
+  }
+  kbd {
+    display: inline-block; padding: .15rem .5rem; border-radius: 4px;
+    background: var(--tag-bg); border: 1px solid var(--card-border); font-family: inherit;
+    font-size: .72rem;
+  }
+
+  /* ─── NAV ARROWS ─── */
+  .nav-arrows { display: flex; gap: .5rem; }
+  .nav-arrow {
+    width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--card-border);
+    background: var(--card-bg); color: var(--text); cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, border-color .2s;
+  }
+  .nav-arrow:hover { background: var(--accent-light); border-color: var(--accent); }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar {
+    position: fixed; top: 60px; left: 0; height: 3px; z-index: 99;
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    transition: width .3s ease;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .slide { padding: 70px 1rem 1.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .kbd-hints { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand"><span>CERTTUS</span> ERP</div>
+  <div class="nav-controls">
+    <span class="slide-counter" id="slideCounter">1 / 10</span>
+    <div class="nav-arrows">
+      <button class="nav-arrow" onclick="navigate(-1)" aria-label="Anterior">&#8592;</button>
+      <button class="nav-arrow" onclick="navigate(1)" aria-label="Próximo">&#8594;</button>
+    </div>
+    <div class="toggle-wrap">
+      <span class="toggle-icon">☀️</span>
+      <div class="theme-toggle" id="themeToggle" role="switch" aria-label="Alternar tema" tabindex="0"></div>
+      <span class="toggle-icon">🌙</span>
+    </div>
+  </div>
+</nav>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- SLIDE 1 — HERO -->
+<section class="slide hero" id="slide-1">
+  <div class="slide-inner">
+    <div class="hero-badge">ERP Automotivo Completo</div>
+    <h1>Conheça o <span>Certtus ERP</span></h1>
+    <p>Solução completa para concessionárias, retíficas e centros automotivos. Gestão integrada do comercial ao fiscal, do CRM ao financeiro.</p>
+    <div class="hero-stats">
+      <div><div class="hero-stat-value">10+</div><div class="hero-stat-label">Módulos</div></div>
+      <div><div class="hero-stat-value">200+</div><div class="hero-stat-label">Telas</div></div>
+      <div><div class="hero-stat-value">100+</div><div class="hero-stat-label">Relatórios</div></div>
+      <div><div class="hero-stat-value">15+</div><div class="hero-stat-label">Integrações bancárias</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 — COMERCIAL / ENTRADAS -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">📦</div>
+      <div class="section-tag">Módulo Comercial</div>
+      <h2>Entradas & Compras</h2>
+      <p>Controle completo do recebimento de mercadorias, conferência de notas fiscais e gestão de fornecedores.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Conferência de Entradas</h3>
+        <p>Análise e conferência de notas fiscais de entrada com validação automática de quantidades e valores.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Cotação de Preços</h3>
+        <p>Sistema completo de cotação com importação/exportação, análise comparativa de preços entre fornecedores.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Transferências entre Filiais</h3>
+        <p>Pedidos e transferências entre empresas do grupo com controle total de movimentação.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Garantias de Entrada</h3>
+        <p>Gestão de garantias recebidas dos fornecedores com rastreio e manutenção.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Sugestão de Compras</h3>
+        <p>Motor inteligente de sugestão de compras baseado em giro de estoque e histórico de vendas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📧</div>
+        <h3>Comunicação com Fornecedores</h3>
+        <p>Envio automatizado de pedidos e comunicações integradas com fornecedores.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 — SAÍDAS / VENDAS -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">🛒</div>
+      <div class="section-tag">Módulo Comercial</div>
+      <h2>Saídas & Vendas</h2>
+      <p>Gestão de vendas balcão, entregas, comissões e catálogo de produtos com integração e-commerce.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <h3>Vendas Balcão</h3>
+        <p>Tela otimizada para vendas rápidas no balcão com busca inteligente de produtos e clientes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Entregas & Logística</h3>
+        <p>Controle de saídas para entrega, rotas de distribuição e retirada de mercadorias.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💵</div>
+        <h3>Comissões de Venda</h3>
+        <p>Cálculo flexível de comissões sobre lucro, por vendedor, por marca e condicionais.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Separação de Estoque</h3>
+        <p>Listagem de separação com fila por localização, conferência de saída e reserva de produtos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>E-Commerce</h3>
+        <p>Integração com plataformas de e-commerce, catálogo online e sincronização de pedidos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Histórico & Análises</h3>
+        <p>Relatórios táticos de vendas por produto, cidade, marca e análise de desempenho comercial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — CRM -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">👥</div>
+      <div class="section-tag">Relacionamento</div>
+      <h2>CRM</h2>
+      <p>Gestão completa do relacionamento com clientes, pesquisas de satisfação e conformidade LGPD.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👤</div>
+        <h3>Cadastro de Pessoas</h3>
+        <p>Cadastro master com importação, múltiplos endereços de entrega e busca online integrada.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h3>Agenda & Contatos</h3>
+        <p>Agenda telefônica, histórico de atividades e gerenciamento de contatos de venda.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3>Pesquisa de Satisfação</h3>
+        <p>Índice de satisfação do cliente com envio automático de pesquisas pós-venda e pós-serviço.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔮</div>
+        <h3>Previsão de Revisões</h3>
+        <p>Motor de previsão para revisões, troca de óleo e retorno de clientes baseado em histórico.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>LGPD</h3>
+        <p>Termo de consentimento para tratamento de dados conforme a Lei Geral de Proteção de Dados.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Interface Touch</h3>
+        <p>Módulo CRM simplificado para tablets e dispositivos móveis com acesso rápido ao cadastro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5 — FINANCEIRO -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">🏦</div>
+      <div class="section-tag">Gestão Financeira</div>
+      <h2>Financeiro</h2>
+      <p>Contas a receber/pagar, cobrança bancária, conciliação e controle completo do fluxo financeiro.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏧</div>
+        <h3>Cobrança Bancária</h3>
+        <p>Integração com 15+ bancos: BB, Itaú, Santander, Bradesco, Sicoob, Sicredi, Inter e mais.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <h3>Conciliação Bancária</h3>
+        <p>Conciliação automática de extratos com lançamentos financeiros e ajuste de divergências.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Boletos & Duplicatas</h3>
+        <p>Emissão de boletos, agrupamento automático de duplicatas e ajustes financeiros.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>TEF & Recebimentos</h3>
+        <p>Transferência Eletrônica de Fundos integrada para recebimentos via cartão no PDV.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Posição Financeira</h3>
+        <p>Demonstrativo completo de movimentações, liquidez corrente e posição consolidada.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3>Autorização de Pagamentos</h3>
+        <p>Fluxo de aprovação para pagamentos com alçada configurável e rastreabilidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 — ESTOQUE -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">📦</div>
+      <div class="section-tag">Gestão de Estoque</div>
+      <h2>Estoque</h2>
+      <p>Controle de inventário, movimentações, precificação e contagem cíclica.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Movimentações</h3>
+        <p>Registro de todas as entradas, saídas, transferências e reservas de produtos em estoque.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Coletor de Dados</h3>
+        <p>Exportação para coletores portáteis para inventário e conferência em campo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔢</div>
+        <h3>Contagem Cíclica</h3>
+        <p>Inventário rotativo por setores com ajuste automático de divergências encontradas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💲</div>
+        <h3>Atualização de Preços</h3>
+        <p>Ferramentas para atualização em lote, listas de preços por fabricante (Cummins, MWM).</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Filtro Unificado</h3>
+        <p>Busca inteligente de produtos com filtros cruzados por marca, aplicação e localização.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Performance de Estoque</h3>
+        <p>Análise de giro, curva ABC e índice de primeiro atendimento ao consumidor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 — FISCAL -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">📑</div>
+      <div class="section-tag">Compliance</div>
+      <h2>Fiscal & Tributário</h2>
+      <p>NF-e, SPED, apurações de ICMS, PIS/COFINS, ISS e integração com SEFAZ de todos os estados.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📃</div>
+        <h3>NF-e & DANFE</h3>
+        <p>Emissão, gerenciamento e impressão de notas fiscais eletrônicas com carta de correção.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>SPED Fiscal & Contábil</h3>
+        <p>Geração automatizada de arquivos SPED Fiscal, Contribuições e Contábil.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <h3>Apuração de Impostos</h3>
+        <p>ICMS, PIS/COFINS, ISS, IRPJ/CSLL e Simples Nacional com cálculo automático.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <h3>Classificação NCM/CFOP</h3>
+        <p>Cadastro completo de NCM com importação e gestão de CFOPs por tipo de operação.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3>Certificado Digital</h3>
+        <p>Configuração e gestão de certificados A1/A3 para assinatura de documentos fiscais.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚛</div>
+        <h3>CT-e & MDF-e</h3>
+        <p>Manifesto eletrônico de documentos fiscais e conhecimento de transporte eletrônico.</p>
+      </div>
+    </div>
+    <div class="tag-list">
+      <span class="tag">GIA-SP</span>
+      <span class="tag">SEFAZ-DF</span>
+      <span class="tag">DIEF</span>
+      <span class="tag">SEF-PE</span>
+      <span class="tag">GNRE</span>
+      <span class="tag">PAF-ECF</span>
+      <span class="tag">FCI</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 — SERVIÇOS -->
+<section class="slide" id="slide-8">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">🔧</div>
+      <div class="section-tag">Oficina & Serviços</div>
+      <h2>Ordens de Serviço</h2>
+      <p>Gestão completa de serviços para concessionárias e retíficas, do agendamento ao faturamento.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3>Agendamento</h3>
+        <p>Agendamento inteligente de serviços com visão de capacidade por seção e técnico.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔩</div>
+        <h3>Execução de Serviços</h3>
+        <p>Apontamento de produção, tempo por serviço e controle de paradas por seção.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💵</div>
+        <h3>Faturamento de OS</h3>
+        <p>Faturamento com cálculo de comissões, contas contábeis e envio de pesquisa de satisfação.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏅</div>
+        <h3>Certificado de Garantia</h3>
+        <p>Emissão de certificados com termos de garantia configuráveis por tipo de serviço.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3>Avaliação de Veículos</h3>
+        <p>Checklist de avaliação veicular na recepção do serviço com registro fotográfico.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Análise de Comissões</h3>
+        <p>Relatórios de comissão sobre vendas de peças e serviços por técnico e vendedor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 — VEÍCULOS & FRENTE DE CAIXA -->
+<section class="slide" id="slide-9">
+  <div class="slide-inner">
+    <div class="section-header">
+      <div class="section-icon">🚗</div>
+      <div class="section-tag">Módulos Especializados</div>
+      <h2>Veículos & Frente de Caixa</h2>
+      <p>Venda de veículos, financiamento, avaliação de usados e PDV completo com ECF/NFC-e.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏎️</div>
+        <h3>Venda de Veículos</h3>
+        <p>Pedido de venda completo com aprovação, financiamento, seguro e despachante integrado.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Avaliação de Usados</h3>
+        <p>Formulário detalhado para avaliação de veículos usados com lançamento de custos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏧</div>
+        <h3>Financeiras & Consórcio</h3>
+        <p>Integração com financeiras, seguradoras e administradoras de consórcio.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <h3>Frente de Caixa (PDV)</h3>
+        <p>PDV completo com suporte a ECF, NFC-e, múltiplos meios de pagamento e sangria.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Cupom Fiscal</h3>
+        <p>Impressão automática de cupons, cancelamento, leituras fiscais e COTEPE.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <h3>Pré-Venda & DAV</h3>
+        <p>Emissão de pré-vendas, mesclagem de pedidos e DAV com identificação CPF/CNPJ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 — ENCERRAMENTO -->
+<section class="slide closing" id="slide-10">
+  <div class="slide-inner">
+    <div class="section-icon" style="margin: 0 auto 1.5rem; font-size: 2.5rem; width: 72px; height: 72px;">🚀</div>
+    <h2>Certtus ERP: <span>Completo e Integrado</span></h2>
+    <p style="margin-bottom: 2rem;">Uma solução robusta que acompanha todo o ciclo do negócio automotivo — da compra ao pós-venda, do estoque ao fiscal.</p>
+    <div class="hero-stats" style="justify-content: center;">
+      <div><div class="hero-stat-value">PostgreSQL</div><div class="hero-stat-label">Banco de Dados</div></div>
+      <div><div class="hero-stat-value">Touch</div><div class="hero-stat-label">Interface Mobile</div></div>
+      <div><div class="hero-stat-value">Web</div><div class="hero-stat-label">E-Commerce</div></div>
+    </div>
+    <div class="tag-list" style="justify-content: center; margin-top: 2.5rem;">
+      <span class="tag">Comercial</span>
+      <span class="tag">CRM</span>
+      <span class="tag">Financeiro</span>
+      <span class="tag">Estoque</span>
+      <span class="tag">Fiscal</span>
+      <span class="tag">Serviços</span>
+      <span class="tag">Veículos</span>
+      <span class="tag">PDV</span>
+      <span class="tag">Contábil</span>
+      <span class="tag">SPED</span>
+    </div>
+    <p style="margin-top: 3rem; font-size: .85rem; color: var(--text-secondary);">Certtus Sistemas Automotivos LTDA</p>
+  </div>
+</section>
+
+<!-- KEYBOARD HINTS -->
+<div class="kbd-hints">
+  <span><kbd>←</kbd> <kbd>→</kbd> Navegar</span>
+  <span><kbd>D</kbd> Tema</span>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('slideCounter');
+  const progressBar = document.getElementById('progressBar');
+  const total = slides.length;
+
+  function updateUI() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    let current = 1;
+    slides.forEach((s, i) => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top < window.innerHeight / 2) current = i + 1;
+    });
+    counter.textContent = current + ' / ' + total;
+  }
+
+  function navigate(dir) {
+    const scrollTop = window.scrollY;
+    let current = 0;
+    slides.forEach((s, i) => {
+      if (s.getBoundingClientRect().top < window.innerHeight / 2) current = i;
+    });
+    const next = Math.max(0, Math.min(total - 1, current + dir));
+    slides[next].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  function setTheme(dark) {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('certtus-theme', dark ? 'dark' : 'light');
+  }
+  toggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    setTheme(!isDark);
+  });
+  toggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); } });
+
+  // Restore theme
+  const saved = localStorage.getItem('certtus-theme');
+  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    setTheme(true);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+    if (e.key === 'd' || e.key === 'D') { toggle.click(); }
+  });
+
+  window.addEventListener('scroll', updateUI, { passive: true });
+  updateUI();
+</script>
+</body>
+</html>
